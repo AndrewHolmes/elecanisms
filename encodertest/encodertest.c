@@ -10,9 +10,8 @@
 #define TOGGLE_LED1         1
 #define TOGGLE_LED2         2
 #define READ_SW1            3
-#define ENC_WRITE_REG       4
 #define ENC_READ_REG        5
-#define TOGGLE_LED3         8 
+#define TOGGLE_LED3         8
 #define READ_SW2            9
 #define READ_SW3            10
 
@@ -125,7 +124,7 @@ int16_t main(void) {
     pin_digitalOut(ENC_NCS);
     pin_set(ENC_NCS);
 
-    spi_open(&spi1, ENC_MISO, ENC_MOSI, ENC_SCK, 2e6);
+    spi_open(&spi1, ENC_MISO, ENC_MOSI, ENC_SCK, 2e6, 1);
 
     InitUSB();                              // initialize the USB registers and serial interface engine
     while (USB_USWSTAT!=CONFIG_STATE) {     // while the peripheral is not configured...

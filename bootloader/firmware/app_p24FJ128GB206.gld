@@ -22,6 +22,8 @@ CRT1_STARTUP(crt1_extended.o)
 CRT_STARTMODE(crt_start_mode_normal)
 #endif
 
+
+
 OPTIONAL(-lpPIC24Fxxx)
 
 /*

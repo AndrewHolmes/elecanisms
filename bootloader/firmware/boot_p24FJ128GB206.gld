@@ -3,6 +3,8 @@
 */
 
 OUTPUT_ARCH("24FJ128GB206")
+CRT0_STARTUP(crt0_extended.o)
+CRT1_STARTUP(crt1_extended.o)
 
 #if __XC16_VERSION__ > 1027
 CRT0_STARTUP(crt0_extended24.o)
@@ -34,7 +36,7 @@ MEMORY
   ivt          : ORIGIN = 0x4,           LENGTH = 0xFC
   aivt         : ORIGIN = 0x104,         LENGTH = 0xFC
   app_ivt      : ORIGIN = 0x1000,        LENGTH = 0x110
-  program (xr) : ORIGIN = 0x1110,        LENGTH = 0x142F0
+  program (xr) : ORIGIN = 0x200,         LENGTH = 0xE00
   CONFIG4      : ORIGIN = 0x157F8,       LENGTH = 0x2
   CONFIG3      : ORIGIN = 0x157FA,       LENGTH = 0x2
   CONFIG2      : ORIGIN = 0x157FC,       LENGTH = 0x2
@@ -49,7 +51,7 @@ __CONFIG1 = 0x157FE;
 __IVT_BASE  = 0x4;
 __AIVT_BASE = 0x104;
 __DATA_BASE = 0x800;
-__CODE_BASE = 0x1110;
+__CODE_BASE = 0x200;
 __APP_IVT_BASE = 0x1000;
 
 /*

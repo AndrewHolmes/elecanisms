@@ -9,7 +9,7 @@ env = Environment(PIC = '24FJ128GB206',
                   LINKFLAGS = '-omf=elf -mcpu=$PIC -Wl,--script="app_p24FJ128GB206.gld"', 
                   CPPPATH = '../lib')
 #Path for OSX
-env.PrependENVPath('PATH', '/Applications/microchip/xc16/v1.23/bin')
+env.PrependENVPath('PATH', '/Applications/microchip/xc16/v1.25/bin')
 #Path for Linux
 #env.PrependENVPath('PATH', '/opt/microchip/xc16/v1.23/bin')
 bin2hex = Builder(action = 'xc16-bin2hex $SOURCE -omf=elf',
@@ -21,31 +21,31 @@ list = Builder(action = 'xc16-objdump -S -D $SOURCE > $TARGET',
                src_suffix = 'elf')
 env.Append(BUILDERS = {'List' : list})
 
-env.Program('encodertest', ['encodertest.c',
-                        'descriptors.c', 
-                        'usb.c', 
+env.Program('inttest', ['inttest.c',
                         '../lib/ui.c', 
                         '../lib/pin.c', 
-                        '../lib/spi.c',
+                        '../lib/uart.c', 
+                        '../lib/int.c', 
+                        '../lib/i2c.c',
                         '../lib/common.c'])
 
-print('Creating builder to load hex file via bootloader...')
+#print('Creating builder to load hex file via bootloader...')
 def load_function(target, source, env):
-    bl = b.bootloadercmd()
-    bl.import_hex(source[0].rstr())
-    bl.write_device()
-    bl.bootloader.start_user()
-    bl.bootloader.close()
-    return None
+   bl = b.bootloadercmd()
+   bl.import_hex(source[0].rstr())
+   bl.write_device()
+   bl.bootloader.start_user()
+   bl.bootloader.close()
+   return None
 
 load = Builder(action=load_function,
-               suffix = 'none',
-               src_suffix = 'hex')
+              suffix = 'none',
+              src_suffix = 'hex')
 
 env.Append(BUILDERS = {'Load' : load})
 
-env.Hex('encodertest')
-env.List('encodertest')
+env.Hex('inttest')
+env.List('inttest')
 # To automatically load the hex file, you need to run scons like this:
 # >scons --site-dir ../site_scons
-env.Load('encodertest')  # Uncomment this line to automatically load the hex file
+env.Load('inttest') # Uncomment this line to automatically load the hex file

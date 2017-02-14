@@ -6,3 +6,4 @@
 .*
 *.pyc
 *.o
+./encodertest/SConstruct
